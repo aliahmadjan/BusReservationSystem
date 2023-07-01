@@ -46,7 +46,7 @@ function App() {
       <Route path="/viewdrivers" element={<ViewDrivers/>}/>
       <Route path ="/viewbuses" element={<ViewBuses/>}/>
         <Route path="/" element={<Home />} />
-        <Route path="/Login" element={<Login />} />
+        {/* <Route path="/Login" element={<Login />} /> */}
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/Regular" element={<Regular />} />
         <Route path="/Short" element={<Short />} />
