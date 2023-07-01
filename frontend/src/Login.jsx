@@ -1,12 +1,19 @@
-import React, { Component } from 'react';
+import React, {useState } from 'react';
 import './Login.css';
 import image from "./login_signup.jpg";
 import logo from "./silverLogo.png";
 import { useNavigate } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import axios from 'axios'
 
 
-function login() {
+const UserLogin = () => {
+
+ 
+  const [uniID , setUniID] = useState("");
+  const [password , setPassword] = useState("");
+  const navigate = useNavigate();
+
   const myStyle = {
     backgroundColor: `#0A253B`,
     height: '100vh',
@@ -19,6 +26,29 @@ function login() {
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
   };
+
+  const loginUser = async(e) =>
+  {
+    e.preventDefault();
+    try {
+       const res=  await axios.post('http://127.0.0.1:5000/users/login', {
+            uniID: uniID,
+            password: password,
+        });
+          localStorage.setItem("userToken",res.data[1]);
+          console.log(localStorage.getItem('userToken'))
+        // setIsLoggedIn(true);
+          navigate("/");
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+          // setSubmitStatus("Invalid Credentials");
+        } else {
+          // Handle other errors here
+          console.error(error);
+      }
+  }
+}
+  
 
   return (
     <div style={myStyle}>
@@ -40,11 +70,21 @@ function login() {
         <div class="formdiv" style={{width:'30%', float:'right'}}>
           <center><p>Login to Your Account</p></center>
           <form>
-                  <div class="d-flex flex-column pb-3"> <label for="name">University ID:</label><br></br><input type="text" name="email" id="name" class="border-bottom border-primary"/> </div>
+                  <div class="d-flex flex-column pb-3"> <label for="name">University ID:</label><br></br>
+                  <input 
+                  type="text"
+                  onChange={e => setUniID(e.target.value)} 
+                  name="email"
+                  id="name" class="border-bottom border-primary"/> </div>
                   <br></br>
-                  <div class="d-flex flex-column pb-3"> <label for="registrationid">Password:</label><br></br><input type="id" name="regitrationid" id="rid" class="border-bottom border-primary"/> </div>
+                  <div class="d-flex flex-column pb-3"> <label for="registrationid">Password:</label><br></br>
+                  <input 
+                  onChange={e => setPassword(e.target.value)} 
+                  type="id" name="regitrationid" id="rid" class="border-bottom border-primary"/> </div>
                   <div class="d-flex flex-column pb-3">
-                    <center><Link to="/Dashboard"><button>Login</button></Link></center>
+                    <center><Link to="/Dashboard"><button
+                    onClick={loginUser}
+                    >Login</button></Link></center>
                     <center><label>Forgot Password?</label></center>
                   </div>
                 </form>
@@ -54,4 +94,4 @@ function login() {
   );
 }
 
-export default login;
+export default UserLogin;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState, useEffect} from 'react';
 import './App.css';
 import background from "./main_background_e.png";
 import logo from "./silverLogo.png";
@@ -7,11 +7,12 @@ import mainimage3 from "./mainimage3.jpg";
 import mainimage2 from "./mainimage2.jpg";
 import location from "./footer.JPG";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
 
 
-function App() {
+const App = () => {
   const myStyle = {
     backgroundImage: `url(${background})`,
     height: '100vh',
@@ -25,6 +26,67 @@ function App() {
     backgroundRepeat: 'no-repeat',
   };
   const navigate = useNavigate();
+  const [name , setName] = useState("")
+
+  const [regID, setRegID] = useState("")
+  const [contact , setContact] = useState("")
+  const [message , setMessage] = useState("")
+
+  const [routes , setRoutes] = useState([])
+
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const getCurentUser = () =>
+  {
+    let userToken = localStorage.getItem("userToken")
+    console.log(userToken)
+    axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+    axios.get("http://127.0.0.1:5000/users/viewuprofile")
+      .then(res=> {
+              console.log(res.data)
+              // setUserID(res.data._id);
+               setName(res.data.name);
+              // setProfileImg(res.data.profileimg)
+      }).catch (err=> {
+          console.log(err) })
+  }
+
+    const getRoutes = () =>
+    {
+      axios.get('http://127.0.0.1:5000/admin/getroutes').then((res)=>
+      {
+        console.log(res.data)
+        setRoutes(res.data)
+      }).catch((err)=>
+      {
+        console.log(err)
+      })
+    }
+
+  const sendMessages = (e) =>
+  {
+    e.preventDefault()
+    axios.post('http://127.0.0.1:5000/users/messages',
+    {
+      'name' : name,
+      'regID' : regID,
+      'contact': contact,
+      'message': message
+    }).then((res)=>
+    {
+      setSuccessMessage('Message Sent successfully!');
+
+    }).catch((err) =>
+    {
+      console.log(err)
+    })
+  }
+
+  useEffect(() =>
+  {
+    getCurentUser();
+    getRoutes();
+  }, [])
     return (
       <div  style={myStyle}>
         <div class="navigation">
@@ -33,6 +95,7 @@ function App() {
             <a href="/login">Login</a>
             <a href="#third">Contact</a>
             <a href="#first">Routes</a>
+            <a href='/reservations'>Reservations</a>
             <a className="active" href="#Home">Home</a>
           </div>
         </div>
@@ -40,42 +103,31 @@ function App() {
           <div class="heading">
             <br></br>
             <br></br>
-            <center><h1>Welcome To PAF-IAST's Transport Office</h1></center>
+            <center><h1>Welcome To PAF-IAST's Transport Office, {name}</h1></center>
           </div>
 
-          <div>
+          {/* <div>
                 <center><Link to="/Login"><button className='loginButton'>Login</button></Link></center>
-          </div>
+          </div> */}
           <div class="our_routes"  id="first">
             <br></br>
             <center><h2>Our Routes</h2></center>
           </div>
           <div class="flexbox-container1">
+
+          
+                {routes.map((data, index)=>{
+                  return(
             <div style={{width:400, height:200, backgroundColor: "#0B2C48", color:'white', border: "10px solid white", borderRadius: "30px"}}>
-              <center><p style={{fontSize:"40px", marginTop:"5px"}}><b>Islamabad</b></p></center>
-              <center><p style={{fontSize:"20px"}}>26 Number, G-14, G-13, G-11, G-9,</p></center>
-              <center><p style={{fontSize:"20px"}}>Faizabad, IJP Road, Koral Chowk</p></center>
+          
+              <center><p style={{fontSize:"40px", marginTop:"5px"}}><b>{data.route}</b></p></center>
+              <center><p style={{fontSize:"20px"}}>{data.stops}</p></center>
+              {/* <center><p style={{fontSize:"20px"}}>Faizabad, IJP Road, Koral Chowk</p></center> */}
             </div>
-            <div style={{width:400, height:200, backgroundColor: "#0B2C48", color:'white', border: "10px solid white", borderRadius: "30px"}}>
-              <center><p style={{fontSize:"40px", marginTop:"5px"}}><b>Wahh Cantt</b></p></center>
-              <center><p style={{fontSize:"20px"}}>Stops to be confirmed by the tranport officer.</p></center>
-            </div>
-            <div style={{width:400, height:200, backgroundColor: "#0B2C48", color:'white', border: "10px solid white", borderRadius: "30px"}}>
-              <center><p style={{fontSize:"40px", marginTop:"5px"}}><b>Haripur</b></p></center>
-              <center><p style={{fontSize:"20px"}}>Stops to be confirmed by the tranport officer, </p></center>
-            </div>
-            <div style={{width:400, height:200, backgroundColor: "#0B2C48", color:'white', border: "10px solid white", borderRadius: "30px"}}>
-              <center><p style={{fontSize:"40px", marginTop:"5px"}}><b>Hattar</b></p></center>
-              <center><p style={{fontSize:"20px"}}>Stops to be confirmed by the tranport officer, </p></center>
-            </div>
-            <div style={{width:400, height:200, backgroundColor: "#0B2C48", color:'white', border: "10px solid white", borderRadius: "30px"}}>
-              <center><p style={{fontSize:"40px", marginTop:"5px"}}><b>Abbottabad</b></p></center>
-              <center><p style={{fontSize:"20px"}}>Stops to be confirmed by the tranport officer, </p></center>
-            </div>
-            <div style={{width:400, height:200, backgroundColor: "#0B2C48", color:'white', border: "10px solid white", borderRadius: "30px"}}>
-              <center><p style={{fontSize:"40px", marginTop:"5px"}}><b>Taxila</b></p></center>
-              <center><p style={{fontSize:"20px"}}>Stops to be confirmed by the tranport officer, </p></center>
-            </div>
+
+            )
+          })}
+      
           </div>
           <div class="flexbox-container2" id="second">
             <div style={{border: "20px", paddingTop:"50px"}}>
@@ -107,16 +159,28 @@ function App() {
             </div>  
             <div class="container bg-white pb-5">
               <div class="row d-flex justify-content-start align-items-center mt-sm-5">
-                <form style={{borderLeft: "100px solid white"}}>
-                  <div class="d-flex flex-column pb-3"> <label for="name">Name:</label><br></br><input type="text" name="email" id="name" class="border-bottom border-primary"/> </div>
-                  <div class="d-flex flex-column pb-3"> <label for="registrationid">Registration ID:</label><br></br><input type="id" name="regitrationid" id="rid" class="border-bottom border-primary"/> </div>
-                  <div class="d-flex flex-column pb-3"> <label for="contact">Contact:</label><br></br><input type="longint" name="contact" id="cntc" class="border-bottom border-primary"/> </div>
-                  <div class="d-flex flex-column pb-3"> <label for="message">Message:</label><br></br><input type="text" name="message" id="msg" class="border-bottom border-primary"/> </div>
+                <form 
+                onSubmit={sendMessages}
+                style={{borderLeft: "100px solid white"}}>
+                  <div class="d-flex flex-column pb-3"> <label for="name">Name:</label><br></br><input type="text"
+                  onChange={(e) => setName(e.target.value)}
+                  name="email" id="name" class="border-bottom border-primary"/> </div>
+                  <div class="d-flex flex-column pb-3"> <label for="registrationid">Registration ID:</label><br></br><input type="id" 
+                  onChange={(e) => setRegID(e.target.value)}
+                  name="regitrationid" id="rid" class="border-bottom border-primary"/> </div>
+                  <div class="d-flex flex-column pb-3"> <label for="contact">Contact:</label><br></br><input type="longint"
+                  onChange={(e) => setContact(e.target.value)}
+                  name="contact" id="cntc" class="border-bottom border-primary"/> </div>
+                  <div class="d-flex flex-column pb-3"> <label for="message">Message:</label><br></br><input type="text" 
+                  onChange={(e) => setMessage(e.target.value)}
+                  name="message" id="msg" class="border-bottom border-primary"/> </div>
                   <br></br>
-                  <div class="d-flex flex-column pb-3"> <button>Send</button></div>
+                  <div class="d-flex flex-column pb-3"> <button type='submit'>Send</button></div>
                 </form>
+
               </div>
            </div>
+           {successMessage && <div className="success">{successMessage}</div>}
           </div>
         </div>
     );

@@ -5,7 +5,7 @@ import background from "./login_signup_background.png";
 import './Dashboard.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-function Dashboard() {
+const Dashboard = (props) => {
     const myStyle = {
         backgroundImage: `url(${background})`,
         height: '100vh',
@@ -18,6 +18,39 @@ function Dashboard() {
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
       };
+
+      const navigate = useNavigate();
+
+      const handleSubmitRegularView = (reservation_viewid ) => { 
+        const name= "Regular";
+        localStorage.removeItem("reservation_viewid");
+        localStorage.setItem("reservation_viewid", reservation_viewid);
+        localStorage.removeItem("reservation_type");
+        localStorage.setItem("reservation_type", name);
+        console.log("Reservation Type", name)
+        props.setReservationType(name)
+        navigate('/Regular')
+      }
+
+      const handleSubmitShortView = (reservation_viewid ) => { 
+        const name ="Short"
+        localStorage.removeItem("reservation_viewid");
+        localStorage.setItem("reservation_viewid", reservation_viewid);
+        localStorage.removeItem("reservation_type");
+        localStorage.setItem("reservation_type", name);
+        props.setReservationType(name)
+        navigate('/Short')
+      }
+
+      const handleSubmitReceiptView = (reservation_viewid ) => { 
+        const name ="Short"
+        localStorage.removeItem("reservation_viewid");
+        localStorage.setItem("reservation_viewid", reservation_viewid);
+        localStorage.removeItem("reservation_type");
+        localStorage.setItem("reservation_type", name);
+        props.setReservationType(name)
+        navigate('/Receipt')
+      }
     return (
         <div style={myStyle}>
             <div className="navi">
@@ -39,8 +72,9 @@ function Dashboard() {
 
             <div class="buttons">
                 <center>
-                    <Link to="/Regular"><button>Regular Reservation</button></Link>
-                    <Link to="/Short"><button>Short Reservation</button></Link>
+                    <button name="Regular" onClick={() => handleSubmitRegularView(props._id, props.reservation_type) }>Regular Reservation</button>
+                    <button name ="Short" onClick={() => handleSubmitShortView(props._id , props.reservation_type) }>Short Reservation</button>
+                    <button name="Receipt" onClick={() => handleSubmitReceiptView(props._id ,props.reservation_type)}>View Receipt</button>
                 </center>  
             </div>
         </div>
