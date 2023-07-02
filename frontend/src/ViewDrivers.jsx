@@ -1,5 +1,7 @@
 import React, {useState , useEffect} from 'react'
 import axios from 'axios'
+import Sidebar from './sidebar'
+import './ViewDrivers.css'
 
 export default function ViewDrivers() {
 
@@ -21,6 +23,9 @@ useEffect(() =>
     getDrivers();
 } , [])
   return (
+    <div className='container'>
+      <Sidebar/>
+   
     <table className="table">
       <thead>
         <tr>
@@ -47,6 +52,7 @@ useEffect(() =>
         })}
       </tbody>
     </table>
+    </div>
 
   )
 }

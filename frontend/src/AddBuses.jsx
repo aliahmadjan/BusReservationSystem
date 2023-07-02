@@ -23,6 +23,7 @@ const AddBuses = () => {
       const [noOfSeats , setNoOfSeats] = useState("");
       const [availableSeats , setAvailableSeats] = useState("")
       const [driverName , setDriverName] = useState("")
+      const [route, setRoute] = useState("")
       
       const [successMessage, setSuccessMessage] = useState('');
      
@@ -36,6 +37,7 @@ const AddBuses = () => {
           // formData
           'busID' : busID,
           'no_of_seats' : noOfSeats,
+          'route' :route,
           'available_seats' : availableSeats,
           'driverName' : driverName
       }).then((res) =>
@@ -72,10 +74,14 @@ const AddBuses = () => {
                         onChange={(e) => setBusID(e.target.value)}
                         id="busID" name="busID"/><br></br>
 
-                        <label htmlFor="noOfSeats">No of Seats:</label><input type="text"
+                   <label htmlFor="route">Route:</label><input type="text"
+                        onChange={(e) => setRoute(e.target.value)}
+                        id="route" name="route"/><br></br>
+
+                        <label htmlFor="noOfSeats">No of Seats:</label><input type="number"
                         onChange={(e) => setNoOfSeats(e.target.value)}
                         id="noOfSeats" name="noOfSeats"/><br></br>
-                        <label htmlFor="availableSeats">Contact:</label><input type="text" 
+                        <label htmlFor="availableSeats">Available Seats:</label><input type="number" 
                         onChange={(e) => setAvailableSeats(e.target.value)}
                         id="availableSeats" name="availableSeats"/><br></br>
                           <label htmlFor="driverName">Driver Name:</label><input type="text" 

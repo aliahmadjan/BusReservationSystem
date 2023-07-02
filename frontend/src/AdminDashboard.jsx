@@ -32,15 +32,15 @@ export default function AdminDashboard() {
   
   return (
     <div className="backcolor">
-      <div>
-        <div class="container">
+      {/* <div> */}
+        {/* <div class="container"> */}
           <Sidebar />
-        </div>
+        {/* </div> */}
         <div class="heading">
           <h3>Hello {name}!</h3>
           <h4>WHAT WOULD YOU LIKE TO DO TODAY?</h4>
         </div>
       </div>
-    </div>
+    // </div>
   );
 }

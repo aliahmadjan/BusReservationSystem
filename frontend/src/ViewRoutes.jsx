@@ -1,5 +1,7 @@
 import React, {useState , useEffect} from 'react'
 import axios from 'axios'
+import Sidebar from './sidebar'
+import './ViewRoutes.css'
 
 export default function ViewRoutes() {
 
@@ -21,6 +23,9 @@ useEffect(() =>
     getRoutes();
 } , [])
   return (
+    <div className='container'>
+
+    <Sidebar/>
     <table className="table">
       <thead>
         <tr>
@@ -46,6 +51,7 @@ useEffect(() =>
         })}
       </tbody>
     </table>
+    </div>
 
   )
 }

@@ -54,12 +54,12 @@ const UserLogin = () => {
     <div style={myStyle}>
       <div className="navi">
         <img src={logo} width={375} height={50} style={{ padding: "20px", paddingBottom: "10px", paddingTop: "30px" }} />
-        <div className="topnav">
+        {/* <div className="topnav">
           <a href="/Login">Login</a>
           <a href="#third">Contact</a>
           <a href="#first">Routes</a>
           <a href="#Home">Home</a>
-        </div>
+        </div> */}
       </div>
       <br></br>
       <br></br>

@@ -22,7 +22,8 @@ app.debug = True
 CORS(app)
 
 # Replace the connection string with your own MongoDB connection string
-client = MongoClient('mongodb+srv://aliahmadjan:12345@cluster0.j5u9lxj.mongodb.net/LearnLive?retryWrites=true&w=majority&ssl=true')
+#Add your mongodb URL here
+client = MongoClient('')
 db = client['BusReservationSystem']
 users = db['users']
 admins = db['admins']
@@ -187,6 +188,7 @@ def AddReservations():
     enddate = request.json.get('enddate')
     emergency_contact = request.json.get('emergency_contact')
     reservation_type = request.json.get('reservation_type')
+    no_of_seats = int(request.json.get('no_of_seats'))
 
     #Store the inform in the table
     reservation_dict = {
@@ -196,6 +198,7 @@ def AddReservations():
         'contact' : contact,
         'startdate' : startdate,
         'enddate': enddate,
+        'no_of_seats' : no_of_seats,
         'emergency_contact' : emergency_contact,
         'reservation_type' : reservation_type
     }
@@ -211,25 +214,38 @@ def getReservations():
     reservations_list = []
     for reservation in result:
         reservations_list.append({
+         'id' :str(reservation['_id']),   
         'uniID': reservation['uniID'],
         'name': reservation['name'],
         'destination': reservation['destination'],
         'contact': reservation['contact'],
         'startdate': reservation['startdate'],
         'enddate': reservation['enddate'],
+        'no_of_seats': reservation['no_of_seats'],
         'emergency_contact': reservation['emergency_contact'],
         'reservation_type':reservation['reservation_type']
     })
 
     return jsonify(reservations_list), 200
 
+@app.route('/admin/acceptreservation/<id>', methods=['DELETE'])
+def AcceptReservation(id):
+    reservation = reservations.find_one({'_id': ObjectId(id)})
+    
+    if not reservation:
+        return jsonify({"error": "Reservation not found"}), 404
+    
+    reservations.delete_one({'_id': ObjectId(id)})
+    
+    return jsonify({"msg": "Reservation accepted successfully"}), 200
 
 
 @app.route('/admin/addbuses', methods = ['POST'])
 def AddBuses():
     busID = request.json.get('busID')
-    no_of_seats = request.json.get('no_of_seats')
-    available_seats = request.json.get('available_seats')
+    route =  request.json.get('route')
+    no_of_seats = int(request.json.get('no_of_seats'))
+    available_seats = int(request.json.get('available_seats'))
     driverName = request.json.get('driverName')
     
     # Check if the driverName already exists
@@ -241,6 +257,7 @@ def AddBuses():
     #Store the inform in the table
     bus_dict = {
         'busID' : busID,
+        'route' : route,
         'no_of_seats' : no_of_seats,
         'available_seats' : available_seats,
         'driverName' : driverName
@@ -259,6 +276,7 @@ def GetBuses():
     for bus in result:
         buses_list.append({
         'busID': bus['busID'],
+        'route' : bus['route'],
         'no_of_seats': bus['no_of_seats'],
         'available_seats': bus['available_seats'],
         'driverName': bus['driverName'],
@@ -396,10 +414,12 @@ def GenerateReceipt():
     services = request.json.get('services')
     seats = request.json.get('seats')
     amount = request.json.get('amount')
+    name = request.json.get('name')
  
 
     #Store the inform in the table
     receipts_dict = {
+        'name' : name,
         'services' : services,
         'seats' : seats,
         'amount' : amount,
@@ -416,6 +436,7 @@ def getReceipt():
     receipts_list = []
     for receipt in result:
         receipts_list.append({
+            'name' : receipt['name'],
         'services': receipt['services'],
         'seats': receipt['seats'],
         'amount': receipt['amount'],
@@ -423,6 +444,78 @@ def getReceipt():
     })
 
     return jsonify(receipts_list), 200
+
+
+# @app.route('/admin/getsameroute', methods=['GET'])
+# def sameRoute():
+#     route1 = buses.find({})
+#     route2 = reservations.find({})
+#     buses_list = []
+#     reservations_list = []
+#     for bus in route1:
+#         buses_list.append({   
+#              '_id' : bus['_id'],
+#             'route': bus['route'],
+#             'no_of_seats': bus['no_of_seats'],
+#             'available_seats': bus['available_seats']
+#         })
+
+#     for reservation in route2:
+#         reservations_list.append({
+#             'destination': reservation['destination'],
+#             'no_of_seats': reservation['no_of_seats']
+#         })
+
+#         if bus['route'] == reservation['destination']:
+#             if reservation['no_of_seats'] <= bus['no_of_seats'] and reservation['no_of_seats'] <= bus['available_seats']:
+#                 bus['available_seats'] -= reservation['no_of_seats']
+
+#     # Update the modified bus data in the database here
+#     buses.update_one({ '_id': bus['_id']}, {'$set': {'available_seats': bus['available_seats']}})
+#     # Fetch the updated bus data from the database
+#     updated_bus = buses.find_one({'_id': bus['_id']})
+
+  
+#     # Return the updated available seats
+#     available_seats = [bus['available_seats'] for bus in buses_list]
+#     return jsonify(available_seats)
+  
+@app.route('/admin/getsameroute', methods=['GET'])
+def sameRoute():
+    route1 = buses.find({})
+    route2 = reservations.find({})
+    buses_list = []
+    reservations_list = []
+    
+    for bus in route1:
+        buses_list.append({   
+             '_id' : bus['_id'],
+            'route': bus['route'],
+            'no_of_seats': bus['no_of_seats'],
+            'available_seats': bus['available_seats']
+        })
+
+    for reservation in route2:
+        reservations_list.append({
+            'destination': reservation['destination'],
+            'no_of_seats': reservation['no_of_seats']
+        })
+
+        for bus in buses_list:
+            if bus['route'] == reservation['destination']:
+                if reservation['no_of_seats'] <= bus['no_of_seats'] and reservation['no_of_seats'] <= bus['available_seats']:
+                    bus['available_seats'] -= reservation['no_of_seats']
+
+                    # Update the modified bus data in the database here
+                    buses.update_one({'_id': bus['_id']}, {'$set': {'available_seats': bus['available_seats']}})
+                    # Fetch the updated bus data from the database
+                    updated_bus = buses.find_one({'_id': bus['_id']})
+
+    # Return the updated available seats
+    available_seats = [bus['available_seats'] for bus in buses_list]
+    return jsonify(available_seats)
+
+
 
 
 

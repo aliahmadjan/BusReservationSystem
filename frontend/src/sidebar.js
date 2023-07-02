@@ -36,9 +36,9 @@ const Sidebar = () => {
               paddingTop: "25px",
             }}
           />
-          <CloseBtn onClick={closeSidebar}>
+          {/* <CloseBtn onClick={closeSidebar}>
             <FaTimes />
-          </CloseBtn>
+          </CloseBtn> */}
         </SidebarHeader>
 
         <Links>

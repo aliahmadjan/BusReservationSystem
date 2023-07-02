@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from "./silverLogo.png";
 import { useNavigate } from 'react-router-dom';
 import background from "./login_signup_background.png";
-import './ManageReservations.css';
+import './ViewMessages.css';
 import axios from 'axios';
 import Sidebar from './sidebar';
 
@@ -26,8 +26,16 @@ const ViewMessages = () => {
   }, []);
 
   return (
+    <div className="container">
+
+  
+          <Sidebar />
+       
+    
     
     <table className="table">
+      <div>
+        
       <thead>
         <tr>
           <th>Registration ID</th>
@@ -47,18 +55,19 @@ const ViewMessages = () => {
               <td>{data.contact}</td>
               <td>{data.message}</td>
            
-              <td>
-                <button>Accept</button>
+              {/* <td>
+                <button className='button-1'>Accept</button>
               </td>
               <td>
-                <button>Reject</button>
-              </td>
+                <button className='button-1'>Reject</button>
+              </td> */}
             </tr>
           );
         })}
       </tbody>
-   
+   </div>
     </table>
+    </div>
   );
 };
 

@@ -95,3 +95,10 @@
     background-color: #1A194D;
     color: white;
   }
+
+  .success{
+    position: absolute;
+    margin-left: 650px;
+    color: white;
+   
+  }

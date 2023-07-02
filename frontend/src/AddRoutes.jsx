@@ -67,7 +67,7 @@ const AddRoutes = () => {
             <br></br>
             <div class="heading">
                 <h5>Add Routes</h5>
-                <p style={{fontSize:"30px"}}>NOW YOU CAN BOOK YOUR SEAT WITH EASE.</p>
+           
             </div>
             <div class="flexbox-container">
                 <form onSubmit={postRoutes}>
@@ -92,6 +92,7 @@ const AddRoutes = () => {
                 </form>
             </div>
             {successMessage && <div className="success">{successMessage}</div>}
+            
         </div>   
     )
 }

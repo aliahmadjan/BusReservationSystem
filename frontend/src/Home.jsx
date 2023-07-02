@@ -95,11 +95,11 @@ const UserHome = () => {
         <img src={logo} width={375} height={50} style={{ padding: "20px", paddingBottom: "10px", paddingTop: "25px" }} />
           <div class="topnav">    
             {/* <a href="/login">Login</a> */}
+            <a href='/'>Logout</a>
+            <a href="/reservations">Reservations</a>
             <a href="#third">Contact</a>
             <a href="#first">Routes</a>
-            <a href="/reservations">Reservations</a>
-            <a href='/'>Logout</a>
-            <a className="active" href="#Home">Home</a>
+            
           </div>
         </div>
         
@@ -160,7 +160,7 @@ const UserHome = () => {
                 <p style={{fontSize:"20px"}}>transport@paf-iast.edu.pk</p>
                 <p style={{fontSize:"20px"}}>0334-8132424</p>
             </div>  
-            <div class="container bg-white pb-5">
+            {/* <div class="container bg-white pb-5"> */}
               <div class="row d-flex justify-content-start align-items-center mt-sm-5">
                 <form onSubmit={sendMessages} style={{borderLeft: "100px solid white"}}>
                   <div class="d-flex flex-column pb-3"> <label for="name">Name:</label><br></br><input
@@ -183,7 +183,7 @@ const UserHome = () => {
               {successMessage && <div className="success">{successMessage}</div>}
            </div>
           </div>
-        </div>
+        // </div>
     );
   }
 

@@ -8,7 +8,8 @@ from bson import ObjectId
 def TokenUser(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        client = MongoClient('mongodb+srv://aliahmadjan:12345@cluster0.j5u9lxj.mongodb.net/LearnLive?retryWrites=true&w=majority&ssl=true')
+        #Add your mongodb URL here
+        client = MongoClient('')
         db = client['BusReservationSystem']
         users = db['users']
         authorization = request.headers.get('Authorization')

@@ -27,6 +27,8 @@ const Short = (props) => {
       const [enddate , setEndDate] = useState(new Date())
       const [reservation_type , setReservationType ]= useState("")
       const [emergencyContact , setEmergencyContact] = useState("")
+      const [routes , setRoutes ] = useState([])
+      const [no_of_seats ,  setNoOfSeats] = useState()
 
       const [successMessage, setSuccessMessage] = useState('');
         const [errorMessage, setErrorMessage] = useState('');
@@ -45,6 +47,18 @@ const Short = (props) => {
           }).catch (err=> {
               console.log(err) })
       }
+
+      const getRoutes = () => 
+        {
+          axios.get('http://127.0.0.1:5000/admin/getroutes').then((res)=>
+          {
+            console.log(res.data)
+            setRoutes(res.data)
+          }).catch((err) =>
+          {
+            console.log(err)
+          })
+        }
 
     const postReservations = (e) =>
     {
@@ -73,6 +87,7 @@ const Short = (props) => {
           "contact": contact,
           "startdate" : startdate,
           "enddate": enddate,
+          "no_of_seats": no_of_seats,
           "emergency_contact" :emergencyContact,
           "reservation_type": props.reservation_type,
       }).then((res) =>
@@ -92,6 +107,7 @@ const Short = (props) => {
     useEffect(() =>
     {
       getCurentUser();
+      getRoutes();
     }, [])
     return (
         <div style={myStyle}>
@@ -116,9 +132,19 @@ const Short = (props) => {
                         <label htmlFor="universityID">University ID:</label><input type="text"
                         onChange={(e) => setUniID(e.target.value)}
                         id="universityID" name="universityID"/><br></br>
-                        <label htmlFor="destination">Destination:</label><input type="text"
-                        onChange={(e) => setDestination(e.target.value)}
-                        id="destination" name="destination"/><br></br>
+                        <label htmlFor="route">Route:</label><select type="text"
+                        onChange={e => setDestination(e.target.value)} 
+                        id="route" name="route"
+                        value={destination}
+                        >
+                       {routes.map((route, index) => (
+                          <option key={index} value={route.route}>
+                            {route.route}
+                          </option>
+                        ))}
+                        </select>
+                        
+                        <br></br>
                         <label htmlFor="contact">Contact:</label><input type="text" 
                         onChange={(e) => setContact(e.target.value)}
                         id="contact" name="contact"/><br></br>
@@ -131,6 +157,11 @@ const Short = (props) => {
                         <label htmlFor="endDate">Ending Date:</label><input type="date" 
                         onChange={(e) => setEndDate(e.target.value)}
                         id="endDate" name="endDate"/><br></br>
+
+                        <label htmlFor="availableSeats">No of Seats: </label><input type="number"
+                        onChange={(e) => setNoOfSeats(e.target.value)}
+                        id="availableSeats" name="availableSeats"/><br></br>
+
                         <label htmlFor="emergencyContact">Emergency Contact:</label><input type="text" 
                         onChange={(e) => setEmergencyContact(e.target.value)}
                         id="emergencyContact" name="emergencyContact"/>

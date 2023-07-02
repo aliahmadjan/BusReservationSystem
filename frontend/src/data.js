@@ -6,8 +6,16 @@ import {
   FaBus,
   FaLongArrowAltRight,
   FaTicketAlt,
+  FaHome
 } from "react-icons/fa";
 export const links = [
+  {
+    id: 0,
+    url: "/adminDashboard",
+    text: "Admin Home",
+    icon: <FaHome />,
+  },
+
   {
     id: 1,
     url: "/addbus",
