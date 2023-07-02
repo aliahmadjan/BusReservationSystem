@@ -7,7 +7,7 @@ import mainimage3 from "./mainimage3.jpg";
 import mainimage2 from "./mainimage2.jpg";
 import location from "./footer.JPG";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import axios from 'axios';
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -106,7 +106,7 @@ const UserHome = () => {
           <div class="heading">
             <br></br>
             <br></br>
-            <center><h1>Welcome To PAF-IAST's Transport Office, {name}!</h1></center>
+            <center><h1>Welcome To PAF-IAST's Transport Office</h1></center>
           </div>
 
           {/* <div>
@@ -116,21 +116,19 @@ const UserHome = () => {
             <br></br>
             <center><h2>Our Routes</h2></center>
           </div>
-          <div class="flexbox-container1">
           {routes.map((data,index) =>
           {
             return(
-              
+              <div class="flexbox-container1">
             <div style={{width:400, height:200, backgroundColor: "#0B2C48", color:'white', border: "10px solid white", borderRadius: "30px"}}>
               <center><p style={{fontSize:"40px", marginTop:"5px"}}><b>{data.route}</b></p></center>
               <center><p style={{fontSize:"20px"}}>{data.stops}</p></center>
-              </div>
-              )
-          })}
-            
+              
+            </div>
             
           </div>
-           
+            )
+          })}
           
           <div class="flexbox-container2" id="second">
             <div style={{border: "20px", paddingTop:"50px"}}>
@@ -162,7 +160,7 @@ const UserHome = () => {
             </div>  
             <div class="container bg-white pb-5">
               <div class="row d-flex justify-content-start align-items-center mt-sm-5">
-                <form onSubmit={sendMessages} style={{borderLeft: "100px solid white"}}>
+                <form onSubmit={postMessage} style={{borderLeft: "100px solid white"}}>
                   <div class="d-flex flex-column pb-3"> <label for="name">Name:</label><br></br><input
                   onChange={(e) => setName(e.target.value)}
                   type="text" name="email" id="name" class="border-bottom border-primary"/> </div>
@@ -187,4 +185,4 @@ const UserHome = () => {
     );
   }
 
-export default UserHome;
+export default App;

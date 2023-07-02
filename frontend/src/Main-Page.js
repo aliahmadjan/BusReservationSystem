@@ -11,10 +11,10 @@ export default function MainPage() {
       </div>
       <h1>Welcome to Bus Reservation System</h1>
       <div className="centerr">
-        <Link to="/Admin">
+        <Link to="/adminLogin">
           <button>Admin Login</button>
         </Link>
-        <Link to="/login">
+        <Link to="/userLogin">
           <button>User Login</button>
         </Link>
       </div>

@@ -25,7 +25,7 @@ CORS(app)
 client = MongoClient('mongodb+srv://aliahmadjan:12345@cluster0.j5u9lxj.mongodb.net/LearnLive?retryWrites=true&w=majority&ssl=true')
 db = client['BusReservationSystem']
 users = db['users']
-admin = db['admin']
+admins = db['admins']
 buses = db['buses']
 routes = db['routes']
 drivers = db['drivers']
@@ -117,7 +117,7 @@ def addadmin():
     if not adminID or not name or not isinstance(password, str):    
         return jsonify({'error': 'Please Fill All the Fields'}), 422
 
-    admin = admin.find_one({'adminID': adminID})
+    admin = admins.find_one({'adminID': adminID})
     if admin:
         return jsonify({'error': 'Invalid Credentials'})
 
@@ -127,7 +127,7 @@ def addadmin():
         'name' : name,
         'password': password
     }
-    admin.insert_one(admin_dict)
+    admins.insert_one(admin_dict)
 
     return jsonify({'message': 'Admin added successfully'})
 
@@ -136,7 +136,7 @@ def adminLogin():
     adminID = request.json.get('adminID')
     password = request.json.get('password')
 
-    admin = admin.find_one({'adminID': adminID})
+    admin = admins.find_one({'adminID': adminID})
     if not admin or admin['password'] != password:
         return jsonify({'message': 'Invalid Credentials'}), 401
 
@@ -148,26 +148,26 @@ def adminLogin():
     token_object = {'token': access_token, 'expiry': expiry ,  '_id': ObjectId()}
 
     # Remove expired tokens from access_tokens array
-    admin.update_one(
+    admins.update_one(
         {'_id': ObjectId(admin['_id'])},
         {'$pull': {'access_tokens': {'expiry': {'$lt': datetime.utcnow()}}}}
     )
 
     # Add the new access token object to the access_tokens array
-    users.update_one(
+    admins.update_one(
         {'_id': ObjectId(admin['_id'])},
         {'$push': {'access_tokens': token_object}}
     )
 
     # Return the access token to the client
-    return jsonify({'message': 'User Logins Successfully'}, access_token), 200 
+    return jsonify({'message': 'Admin Logins Successfully'}, access_token), 200 
 
 @app.route('/admin/viewaprofile', methods=['GET'])
 @TokenAdmin
 def view_admin_profile():
     # Access the authenticated user using `request.users`
-    admin = request.admin
-    print(admin)
+    admin = request.admins
+    #print(admin)
     # Perform actions with the user data
     # Serialize the user data into a dictionary or JSON format
     serialized_admin = {

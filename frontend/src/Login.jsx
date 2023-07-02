@@ -38,7 +38,7 @@ const UserLogin = () => {
           localStorage.setItem("userToken",res.data[1]);
           console.log(localStorage.getItem('userToken'))
         // setIsLoggedIn(true);
-          navigate("/");
+          navigate("/userHome");
     } catch (error) {
       if (error.response && error.response.status === 401) {
           // setSubmitStatus("Invalid Credentials");
@@ -79,8 +79,9 @@ const UserLogin = () => {
                   <br></br>
                   <div class="d-flex flex-column pb-3"> <label for="registrationid">Password:</label><br></br>
                   <input 
+                   type="password"
                   onChange={e => setPassword(e.target.value)} 
-                  type="id" name="regitrationid" id="rid" class="border-bottom border-primary"/> </div>
+                  name="regitrationid" id="rid" class="border-bottom border-primary"/> </div>
                   <div class="d-flex flex-column pb-3">
                     <center><Link to="/Dashboard"><button
                     onClick={loginUser}

@@ -3,7 +3,7 @@ import Navbar1 from "./navbar1";
 import "./App.css";
 import Form from "./Form";
 
-export default function Admin() {
+export default function AdminLogin() {
   return (
     <div className="back">
       <div>

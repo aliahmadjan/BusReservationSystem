@@ -30,6 +30,7 @@ const Sidebar = () => {
             width={375}
             height={50}
             style={{
+             
               padding: "20px",
               paddingBottom: "10px",
               paddingTop: "25px",
@@ -54,7 +55,7 @@ const Sidebar = () => {
           })}
         </Links>
 
-        <SocialIcons>
+        {/* <SocialIcons>
           {social.map((link) => {
             const { id, url, icon } = link;
             return (
@@ -63,12 +64,12 @@ const Sidebar = () => {
               </li>
             );
           })}
-        </SocialIcons>
+        </SocialIcons> */}
       </StyledAside>
       <NavbarToggle>
         <img
           src={logo}
-          width={375}
+          width={345}
           height={50}
           style={{ padding: "20px", paddingBottom: "10px", paddingTop: "25px" }}
         />
@@ -101,7 +102,7 @@ const StyledAside = styled.aside`
   position: fixed;
   top: 0;
   left: 0;
-  width: 50%;
+  width: 30%;
   height: 100%;
   background-color: silver;
   display: grid;

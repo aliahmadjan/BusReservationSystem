@@ -34,9 +34,9 @@ const Short = (props) => {
       const getCurentUser = () =>
       {
         let userToken = localStorage.getItem("userToken")
-        console.log(userToken)
+        //console.log(userToken)
         axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-        axios.get("http://127.0.0.1:5000/users/viewprofile")
+        axios.get("http://127.0.0.1:5000/users/viewuprofile")
           .then(res=> {
                     //console.log(res.data)
                   // setUserID(res.data._id);
@@ -77,7 +77,7 @@ const Short = (props) => {
           "reservation_type": props.reservation_type,
       }).then((res) =>
       {
-        setSuccessMessage('Regular Reservation successful!');
+        setSuccessMessage('Short Reservation Successful!');
          setErrorMessage('');
               // res.json();
       }).catch((err) => {
@@ -98,11 +98,11 @@ const Short = (props) => {
             <div className="navi">
                 <img src={logo} width={375} height={50} style={{ padding: "20px", paddingBottom: "10px", paddingTop: "30px" }} />
                 <div className="topnav">
-                <a href="/Login">Logout</a>
-                <a href="#third">Contact</a>
+                <a href="/reservations">Back</a>
+                {/* <a href="#third">Contact</a>
                 <a href="#second">Dashboard</a>
                 <a href="#first">Routes</a>
-                <a href="#Home">Home</a>
+                <a href="#Home">Home</a> */}
                 </div>
             </div>
             <br></br>

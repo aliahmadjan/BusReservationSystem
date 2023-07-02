@@ -1,69 +1,101 @@
 import React from "react";
 import {
-  FaBehance,
-  FaFacebook,
-  FaLinkedin,
-  FaTwitter,
-  FaSketch,
-  FaHome,
-  FaUserFriends,
-  FaFolderOpen,
-  FaCalendarAlt,
-  FaWpforms,
-  FaShoppingCart,
+  FaComments,
+  FaMale,
+  FaRoute,
+  FaBus,
+  FaLongArrowAltRight,
+  FaTicketAlt,
 } from "react-icons/fa";
 export const links = [
   {
     id: 1,
-    url: "/",
-    text: "Manage bus",
-    icon: <FaHome />,
+    url: "/addbus",
+    text: "Add bus",
+    icon: <FaBus />,
   },
   {
     id: 2,
-    url: "/about",
-    text: "Manage drivers",
-    icon: <FaUserFriends />,
+    url: "/viewbuses",
+    text: "View Buses",
+    icon: <FaBus />,
   },
   {
     id: 3,
-    url: "/trending",
-    text: "Manage routes",
-    icon: <FaFolderOpen />,
+    url: "/adddriver",
+    text: "Add Drivers",
+    icon: <FaMale />,
   },
 
   {
     id: 4,
-    url: "/cart",
-    text: "Manage reservations",
-    icon: <FaShoppingCart />,
+    url: "/viewdrivers",
+    text: "View Drivers",
+    icon: <FaMale />,
   },
-];
 
-export const social = [
-  {
-    id: 1,
-    url: "https://www.twitter.com",
-    icon: <FaFacebook />,
-  },
-  {
-    id: 2,
-    url: "https://www.twitter.com",
-    icon: <FaTwitter />,
-  },
-  {
-    id: 3,
-    url: "https://www.twitter.com",
-    icon: <FaLinkedin />,
-  },
-  {
-    id: 4,
-    url: "https://www.twitter.com",
-    icon: <FaBehance />,
-  },
   {
     id: 5,
-    url: "https://www.twitter.com",
-    icon: <FaSketch />,
+    url: "/addroute",
+    text: "Add Route",
+    icon: <FaRoute />,
   },
+
+  {
+    id: 6,
+    url: "/viewroutes",
+    text: "View Routes",
+    icon: <FaRoute />,
+  },
+  {
+    id: 7,
+    url: "/managereservations",
+    text: "Manage Reservations",
+    icon: <FaTicketAlt />,
+  },
+
+  {
+    id: 8,
+    url: "/viewmessages",
+    text: "View Messages",
+    icon: <FaComments />,
+  },
+
+  {
+    id: 9,
+    url: "/",
+    text: "Logout",
+    icon: <FaLongArrowAltRight/>
+  
+  },
+
+
 ];
+
+// export const social = [
+//   {
+//     id: 1,
+//     url: "https://www.twitter.com",
+//     icon: <FaFacebook />,
+//   },
+//   {
+//     id: 2,
+//     url: "https://www.twitter.com",
+//     icon: <FaTwitter />,
+//   },
+//   {
+//     id: 3,
+//     url: "https://www.twitter.com",
+//     icon: <FaLinkedin />,
+//   },
+//   {
+//     id: 4,
+//     url: "https://www.twitter.com",
+//     icon: <FaBehance />,
+//   },
+//   {
+//     id: 5,
+//     url: "https://www.twitter.com",
+//     icon: <FaSketch />,
+//   },
+// ];

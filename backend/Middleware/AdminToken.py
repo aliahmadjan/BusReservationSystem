@@ -10,7 +10,7 @@ def TokenAdmin(f):
     def decorated_function(*args, **kwargs):
         client = MongoClient('mongodb+srv://aliahmadjan:12345@cluster0.j5u9lxj.mongodb.net/LearnLive?retryWrites=true&w=majority&ssl=true')
         db = client['BusReservationSystem']
-        admin = db['admin']
+        admins = db['admins']
         authorization = request.headers.get('Authorization')
         if not authorization:
             return jsonify({'error': 'Unauthorized'}), 401
@@ -20,16 +20,16 @@ def TokenAdmin(f):
         #print(token)
         try:
             #print("HELLO WORLD")
-            decoded_token = jwt.decode(token, "MYNAMEIS", algorithms=['HS256'])
-            print(decoded_token)
+            decoded_token = jwt.decode(token, "HELLOUSER123", algorithms=['HS256'])
+            #print(decoded_token)
             admin_id = decoded_token['sub']
-            #print(user_id)
-            admin_data = admin.find_one({'_id': ObjectId(admin_id)})
-            print(admin_data)
+            #print(admin_id)
+            admin_data = admins.find_one({'_id': ObjectId(admin_id)})
+            #print(admin_data)
             if not admin_data:
                 return jsonify({'error': 'Invalid user'}), 401
 
-            request.admin = admin_data
+            request.admins = admin_data
 
             return f(*args, **kwargs)
         except jwt.ExpiredSignatureError:

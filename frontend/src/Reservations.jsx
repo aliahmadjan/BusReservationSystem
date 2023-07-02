@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import logo from "./silverLogo.png";
 import { useNavigate } from 'react-router-dom';
 import background from "./login_signup_background.png";
-import './Dashboard.css';
+import './Reservations.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-const Dashboard = (props) => {
+const Reservations = (props) => {
     const myStyle = {
         backgroundImage: `url(${background})`,
         height: '100vh',
@@ -51,17 +51,19 @@ const Dashboard = (props) => {
         props.setReservationType(name)
         navigate('/Receipt')
       }
+
+     
     return (
         <div style={myStyle}>
             <div className="navi">
                 <img src={logo} width={375} height={50} style={{ padding: "20px", paddingBottom: "10px", paddingTop: "30px" }} />
-                <div className="topnav">
-                <a href="/Login">Logout</a>
+                 <div className="topnav">
+                {/* <a href="/Login">Logout</a>
                 <a href="#third">Contact</a>
                 <a href="#second">Dashboard</a>
-                <a href="#first">Routes</a>
-                <a href="#Home">Home</a>
-                </div>
+                <a href="#first">Routes</a> */}
+                <a href="/userHome">Back</a>
+                </div> 
             </div>
             <br></br>
             <br></br>
@@ -76,9 +78,12 @@ const Dashboard = (props) => {
                     <button name ="Short" onClick={() => handleSubmitShortView(props._id , props.reservation_type) }>Short Reservation</button>
                     <button name="Receipt" onClick={() => handleSubmitReceiptView(props._id ,props.reservation_type)}>View Receipt</button>
                 </center>  
+                
             </div>
+
+           
         </div>
     )
 }
 
-export default Dashboard;
+export default Reservations;

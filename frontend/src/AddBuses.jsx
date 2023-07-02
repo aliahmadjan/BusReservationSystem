@@ -53,11 +53,11 @@ const AddBuses = () => {
             <div className="navi">
                 <img src={logo} width={375} height={50} style={{ padding: "20px", paddingBottom: "10px", paddingTop: "30px" }} />
                 <div className="topnav">
-                <a href="/Login">Logout</a>
+                {/* <a href="/Login">Logout</a>
                 <a href="#third">Contact</a>
                 <a href="#second">Dashboard</a>
-                <a href="#first">Routes</a>
-                <a href="#Home">Home</a>
+                <a href="#first">Routes</a> */}
+                <a href="/adminDashboard">Back</a>
                 </div>
             </div>
             <br></br>
