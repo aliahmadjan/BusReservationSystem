@@ -9,7 +9,9 @@ def TokenAdmin(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         #Add your mongodb URL here
-        client = MongoClient('')
+        client = MongoClient('mongodb+srv://muhammaddanish155:mongodbprog123@tms.xpsuglx.mongodb.net/?retryWrites=true&w=majority')
+
+        #client = MongoClient('')
         db = client['BusReservationSystem']
         admins = db['admins']
         authorization = request.headers.get('Authorization')

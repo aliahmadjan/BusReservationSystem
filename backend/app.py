@@ -23,7 +23,7 @@ CORS(app)
 
 # Replace the connection string with your own MongoDB connection string
 #Add your mongodb URL here
-client = MongoClient('')
+client = MongoClient('mongodb+srv://muhammaddanish155:mongodbprog123@tms.xpsuglx.mongodb.net/?retryWrites=true&w=majority')
 db = client['BusReservationSystem']
 users = db['users']
 admins = db['admins']
